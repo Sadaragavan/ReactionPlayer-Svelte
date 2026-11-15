@@ -20,7 +20,7 @@
 - [x] Sync engine: `timeline.ts`, `track.ts`, `playback.ts` (ported from original codebase)
 - [x] UI: Root layout with dock, home page, new session page, session player page
 - [x] Build: `npm run build` succeeds (SSR + client)
-- [x] Type check: `npm run check` passes with 0 errors
+- [x] Type check: `npm run check` passes with 0 errors (4 benign warnings about non-reactive URL param vars)
 - [x] Dev server: loads successfully with Supabase env vars provided
 - [x] GitHub repository: https://github.com/Sadaragavan/ReactionPlayer-Svelte.git
 
