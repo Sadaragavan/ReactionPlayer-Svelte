@@ -123,7 +123,9 @@
 
 		<form onsubmit={handleCreate} class="space-y-6">
 			<div class="text-left">
-				<label class="block text-sm font-medium text-gray-300 mb-2">Source Video</label>
+				<label for="source-video" class="block text-sm font-medium text-gray-300 mb-2">
+					Source Video
+				</label>
 				<div
 					class="border border-gray-700 rounded p-4 hover:border-gray-600 transition-colors cursor-pointer"
 				>
@@ -145,6 +147,7 @@
 						</div>
 					{/if}
 					<input
+						id="source-video"
 						type="file"
 						accept="video/*"
 						class="hidden"
@@ -157,7 +160,7 @@
 			</div>
 
 			<div class="text-left">
-				<label class="block text-sm font-medium text-gray-300 mb-2">
+				<label for="reaction-video" class="block text-sm font-medium text-gray-300 mb-2">
 					Reaction Video
 				</label>
 				<div
@@ -181,6 +184,7 @@
 						</div>
 					{/if}
 					<input
+						id="reaction-video"
 						type="file"
 						accept="video/*"
 						class="hidden"

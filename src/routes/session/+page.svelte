@@ -5,10 +5,10 @@
 
 	const browser = typeof window !== 'undefined';
 
-	let sourceUrl = $state('');
-	let reactionUrl = $state('');
-	let sourceName = $state('Source');
-	let reactionName = $state('Reaction');
+	let sourceUrl = '';
+	let reactionUrl = '';
+	let sourceName = 'Source';
+	let reactionName = 'Reaction';
 
 	// Parse query params for blob URLs
 	if (browser) {
@@ -59,8 +59,8 @@
 	let engine: PlaybackEngine | null = null;
 
 	// Video element refs
-	let sourceEl: HTMLVideoElement | null = null;
-	let reactionEl: HTMLVideoElement | null = null;
+	let sourceEl = $state<HTMLVideoElement | null>(null);
+	let reactionEl = $state<HTMLVideoElement | null>(null);
 	let sourceAttached = $state(false);
 	let reactionAttached = $state(false);
 

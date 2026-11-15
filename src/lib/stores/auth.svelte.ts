@@ -23,14 +23,16 @@ export class AuthStore {
 		const supabase = createSupabaseBrowserClient();
 
 		// Listen for auth changes
-		const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-			this.session = session ?? null;
-			this.user = session?.user ?? null;
-			this.loading = false;
-		});
+		const { data: sub } = supabase.auth.onAuthStateChange(
+			(_event: unknown, session: Session | null) => {
+				this.session = session ?? null;
+				this.user = session?.user ?? null;
+				this.loading = false;
+			}
+		);
 
 		// Initial session
-		supabase.auth.getSession().then(({ data }) => {
+		supabase.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
 			this.session = data.session ?? null;
 			this.user = data.session?.user ?? null;
 			this.loading = false;
