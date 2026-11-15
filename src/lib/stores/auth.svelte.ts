@@ -1,12 +1,12 @@
 /**
  * Client auth store — reactive session state.
  * Reads from Supabase auth and exposes sign-in/sign-out.
+ * Browser-only: Supabase client is lazily created to avoid SSR issues.
  */
 
 import { createSupabaseBrowserClient } from '$lib/supabase';
 import type { User, Session } from '@supabase/supabase-js';
-
-const supabase = createSupabaseBrowserClient();
+const browser = typeof window !== 'undefined';
 
 export class AuthStore {
 	user = $state<User | null>(null);
@@ -15,6 +15,13 @@ export class AuthStore {
 	error = $state<string | null>(null);
 
 	constructor() {
+		if (!browser) {
+			this.loading = false;
+			return;
+		}
+
+		const supabase = createSupabaseBrowserClient();
+
 		// Listen for auth changes
 		const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
 			this.session = session ?? null;
@@ -32,6 +39,7 @@ export class AuthStore {
 
 	async signIn(email: string, password: string) {
 		this.error = null;
+		const supabase = createSupabaseBrowserClient();
 		const { error } = await supabase.auth.signInWithPassword({ email, password });
 		if (error) {
 			this.error = error.message;
@@ -42,6 +50,7 @@ export class AuthStore {
 
 	async signUp(email: string, password: string) {
 		this.error = null;
+		const supabase = createSupabaseBrowserClient();
 		const { error } = await supabase.auth.signUp({ email, password });
 		if (error) {
 			this.error = error.message;
@@ -52,6 +61,7 @@ export class AuthStore {
 
 	async signOut() {
 		this.error = null;
+		const supabase = createSupabaseBrowserClient();
 		const { error } = await supabase.auth.signOut();
 		if (error) {
 			this.error = error.message;
@@ -64,6 +74,7 @@ export class AuthStore {
 
 	async resetPassword(email: string) {
 		this.error = null;
+		const supabase = createSupabaseBrowserClient();
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
 			redirectTo: `${import.meta.env.PUBLIC_APP_URL}/auth/reset-password`
 		});
@@ -76,6 +87,7 @@ export class AuthStore {
 
 	async updatePassword(password: string) {
 		this.error = null;
+		const supabase = createSupabaseBrowserClient();
 		const { error } = await supabase.auth.updateUser({ password });
 		if (error) {
 			this.error = error.message;
